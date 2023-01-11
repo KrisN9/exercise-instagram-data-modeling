@@ -15,17 +15,29 @@ class User(Base):
     lastname = Column(String(100), nullable=False)
     email = Column(String(250), nullable=False)
 
+    def to_dict(self):
+        return {}
+
+
 class Post(Base):
     __tablename__ = 'post'
     id = Column(Integer, primary_key=True)
     image_url = Column(String(700), nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'))
 
+    def to_dict(self):
+        return {}
+
+
 class Comment(Base):
     __tablename__ = 'comment'
     id = Column(Integer, primary_key=True)
     comment_text = Column(String(500), nullable=False)
     post_id = Column(Integer, ForeignKey('post.id'))
+
+    def to_dict(self):
+        return {}
+
 
 class Media(Base):
     __tablename__ = 'media'
@@ -36,6 +48,7 @@ class Media(Base):
 
     def to_dict(self):
         return {}
+
 
 ## Draw from SQLAlchemy base
 try:
