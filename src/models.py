@@ -8,6 +8,7 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
+
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
@@ -18,11 +19,18 @@ class User(Base):
     def to_dict(self):
         return {}
 
+class Follower(Base):
+    __tablename__ = 'follower'
+    id = Column(Integer, primary_key=True)
+    user_from_id = Column(Integer, ForeignKey('user.id'))
+
+    def to_dict(self):
+        return {}
+
 
 class Post(Base):
     __tablename__ = 'post'
     id = Column(Integer, primary_key=True)
-    image_url = Column(String(700), nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'))
 
     def to_dict(self):
@@ -33,6 +41,7 @@ class Comment(Base):
     __tablename__ = 'comment'
     id = Column(Integer, primary_key=True)
     comment_text = Column(String(500), nullable=False)
+    author_id = Column(Integer, ForeignKey('user.id'))
     post_id = Column(Integer, ForeignKey('post.id'))
 
     def to_dict(self):
@@ -43,12 +52,12 @@ class Media(Base):
     __tablename__ = 'media'
     id = Column(Integer, primary_key=True)
     url = Column(String(700), nullable=False)
+    image_url = Column(String(700), nullable=False)
     post_id = Column(Integer, ForeignKey('post.id'))
-    comment_id = Column(Integer, ForeignKey('comment.id'))
+
 
     def to_dict(self):
         return {}
-
 
 ## Draw from SQLAlchemy base
 try:
